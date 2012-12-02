@@ -142,6 +142,10 @@ Nxt.prototype.play_tone = function (freq, dur) {
 	this.execute_command(command);
 };
 
+Nxt.prototype.motor_set_speed = function (motor, speed) {
+	this.set_output_state(motor, speed, this.MOTORON + this.BRAKE + this.REGULATED, this.REGULATION_MODE_MOTOR_SPEED, 0, this.MOTOR_RUN_STATE_RUNNING, 0);
+};
+
 Nxt.prototype.set_output_state = function (port, power, mode, reg_mode, turn_ratio, run_state, tacho_limit) {
 	var tacho = [];
 	tacho[0] = tacho_limit & 0xff;
