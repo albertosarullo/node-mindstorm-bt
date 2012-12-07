@@ -184,12 +184,14 @@ Nxt.prototype.reset_input_scaled_value = function (port) {
 
 //Message is needed to be an array
 Nxt.prototype.message_write = function (inbox_no, message) {
-	var command_arr = [0x00, 0x09, inbox_no, message.length];
-	var i;
-	for (i in message) {
-		command_arr.push(message[i]);
-	}
-	var command = new Buffer(command_arr);
+	var command;
+	command = new Buffer(5+message.length);
+	command[0] = 0x00;
+	command[1] = 0x09;
+	command[2] = inbox_no;
+	command[3] = message.length+1;
+	message.copy(command, 4);
+	command[4+message.length] = 0x00;
 	this.execute_command(command);
 };
 
